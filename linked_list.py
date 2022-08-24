@@ -12,15 +12,15 @@ class LinkedList:
 
     def insert(self, data, index=0):
         node = self.Node(data, self.head)
-        # First time, add end
+        # First time add end
         if self.head is None and index == -1:
             self.head = node
             return
-        # Add start
+        # Always add start
         if index == 0:
             self.head = node
             return
-        # Add at position
+        # Always add at position except first
         else:
             if index == -1:
                 node = self.Node(data, None)
@@ -32,7 +32,7 @@ class LinkedList:
             else:
                 count = 0
                 iteration = self.head
-                while iteration.next:
+                while iteration:
                     count += 1
                     if count == index:
                         node = self.Node(data, iteration.next)
@@ -67,6 +67,6 @@ if __name__ == '__main__':
     linked_list.insert(1, index=-1)
     linked_list.insert(3)
     linked_list.insert(7, index=-1)
-    linked_list.insert(10, index=3)
+    linked_list.insert(10, index=0)
     print('Length:', len(linked_list))
     print(linked_list)
