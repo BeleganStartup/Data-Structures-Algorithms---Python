@@ -10,28 +10,43 @@ class LinkedList:
     def __init__(self):
         self.head = None
 
-    def start_insert(self, data):
+    def insert(self, data, index=0):
         node = self.Node(data, self.head)
-        self.head = node
-
-    def end_insert(self, data):
-        if self.head is None:
-            self.start_insert(data)
+        # First time, add end
+        if self.head is None and index == -1:
+            self.head = node
             return
-        node = self.Node(data, None)
-        iteration = self.head
-        while iteration.next:
-            iteration = iteration.next
-        iteration.next = node
+        # Add start
+        if index == 0:
+            self.head = node
+            return
+        # Add at position
+        else:
+            if index == -1:
+                node = self.Node(data, None)
+                iteration = self.head
+                while iteration.next:
+                    iteration = iteration.next
+                iteration.next = node
+                return
+            else:
+                count = 0
+                iteration = self.head
+                while iteration.next:
+                    count += 1
+                    if count == index:
+                        node = self.Node(data, iteration.next)
+                        iteration.next = node
+                        return
+                    iteration = iteration.next
 
     def __len__(self):
-        count = 0
-        if self.head is not None:
-            iteration = self.head
-            while iteration:
-                count += 1
-                iteration = iteration.next
-        return count
+        counter = 0
+        iteration = self.head
+        while iteration:
+            counter += 1
+            iteration = iteration.next
+        return counter
 
     def __str__(self):
         if self.head is None:
@@ -49,9 +64,9 @@ class LinkedList:
 
 if __name__ == '__main__':
     linked_list = LinkedList()
-    linked_list.start_insert(1)
-    linked_list.start_insert(3)
-    linked_list.start_insert(7)
-    linked_list.end_insert(10)
+    linked_list.insert(1, index=-1)
+    linked_list.insert(3)
+    linked_list.insert(7, index=-1)
+    linked_list.insert(10, index=3)
     print('Length:', len(linked_list))
     print(linked_list)
